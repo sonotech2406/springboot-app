@@ -43,11 +43,7 @@ stages:
       inputs:
         Contents: '*.yaml'
         TargetFolder: '$(build.artifactstagingdirectory)'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+
     - task: ECRPushImage@1
       inputs:
         awsCredentials: 'AWS_Nov_22'
@@ -57,3 +53,9 @@ stages:
         sourceImageTag: $(Build.BuildId)
         pushTag: latest
         repositoryName: 'my-sample-docker-repo'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
